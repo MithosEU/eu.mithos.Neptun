@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	
+	<object class="GtkWindow" id="dialog1">
+		<property name="modal">true</property>
+		<property name="decorated">false</property>
+		<child>
+			<object class="GtkBox">
+				<property name="orientation">vertical</property>
+				<property name="halign">center</property>
+				<property name="valign">center</property>
+				<property name="spacing">20</property>
+				<child>
+					<object id="adressEntry" class="GtkEntry">
+						<property name="max-width-chars">50</property>
+					</object>
+				</child>
+				<child>
+					<object class="GtkBox">
+						<property name="spacing">10</property>
+						<property name="orientation">horizontal</property>
+						<property name="halign">end</property>
+						<child>
+							<object id="te" class="GtkButton">
+								<property name="label">Zurück</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkButton">
+								<property name="label">Adresse laden</property>
+								<property name="action-name">app.load_adress</property>
+							</object>
+						</child>
+					</object>
+				</child>
+			</object>
+		</child>
+		<style>
+			<class name="dialog" />
+		</style>
+	</object>
+
+	
+</interface>

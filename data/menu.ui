@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+
+	<menu id="windowMenuModel">
+		<submenu>
+			<attribute name="label">Internet</attribute>
+			<section>
+				<item>
+					<attribute name="label">Adresse eingeben ...</attribute>
+					<attribute name="action">app.enter_adress</attribute>
+				</item>
+				<item>
+					<attribute name="label">Seite zurück gehen</attribute>
+					<attribute name="action">app.go_back</attribute>
+				</item>
+				<item>
+					<attribute name="label">Seite vorwärts gehen</attribute>
+					<attribute name="action">app.go_forward</attribute>
+				</item>
+				<item>
+					<attribute name="label">Seite neu laden</attribute>
+				</item>
+			</section>
+			<section>
+				<item>
+					<attribute name="label">Neuer Reiter</attribute>
+					<attribute name="action">app.add_tab</attribute>
+				</item>
+				<item>
+					<attribute name="label">Reiter schließen</attribute>
+					<attribute name="action">app.close_tab</attribute>
+				</item>
+				<item>
+					<attribute name="label">Reiterübersicht</attribute>
+					<attribute name="action">app.load_overview</attribute>
+				</item>
+			</section>
+			<section>
+				<item>
+					<attribute name="label">Beenden</attribute>
+					<attribute name="action">app.quit</attribute>
+				</item>
+			</section>
+		</submenu>
+		<submenu>
+			<attribute name="label">Bearbeiten</attribute>
+			<section>
+				<item>
+					<attribute name="label">Kopieren</attribute>
+				</item>
+				<item>
+					<attribute name="label">Ausschneiden</attribute>
+				</item>
+				<item>
+					<attribute name="label">Einfügen</attribute>
+				</item>
+				<item>
+					<attribute name="label">Entfernen</attribute>
+				</item>
+			</section>
+			<section>
+				<item>
+					<attribute name="label">Vorgang zurücknehmen</attribute>
+				</item>
+				<item>
+					<attribute name="label">Vorgang wiederholen</attribute>
+				</item>
+			</section>
+		</submenu>
+		<submenu>
+			<attribute name="label">Verlauf</attribute>
+		</submenu>
+		<submenu>
+			<attribute name="label">Lesezeichen</attribute>
+			<section>
+				<item>
+					<attribute name="label">Lesezeichen setzten</attribute>
+				</item>
+				<item>
+					<attribute name="label">Lesezeichen entfernen</attribute>
+				</item>
+			</section>
+			<section>
+				<submenu>
+					<attribute name="label">Persönliche Liste</attribute>
+				</submenu>
+				<submenu>
+					<attribute name="label">Empfohlene Liste</attribute>
+					<item>
+						<attribute name="label">Mithos - Startseite</attribute>
+					</item>
+				</submenu>
+			</section>
+		</submenu>
+		<submenu>
+			<attribute name="label">Hilfe</attribute>
+			<section>
+				<item>
+					<attribute name="label">Handbuch ...</attribute>
+				</item>
+				<item>
+					<attribute name="label">Info ...</attribute>
+				</item>
+			</section>
+		</submenu>
+	</menu>
+
+
+</interface>

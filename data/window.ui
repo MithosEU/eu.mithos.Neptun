@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<object id="mainWindow" class="GtkApplicationWindow">
+		<property name="title">eu.mithos.Neptun</property>
+		<property name="default-width">600</property>
+		<property name="default-height">350</property>
+		<property name="decorated">false</property>
+		<child>
+			<object class="GtkOverlay">
+				<child type="overlay">
+					<object id="navToolbar" class="GtkBox">
+						<property name="valign">start</property>
+						<property name="hexpand">true</property>
+						<child>
+							<object class="GtkButton">
+								<property name="margin-top">4</property>
+								<property name="icon-name">go-previous-symbolic</property>
+								<property name="action-name">app.go_back</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkButton">
+								<property name="margin-top">4</property>
+								<property name="icon-name">go-next-symbolic</property>
+								<property name="action-name">app.go_forward</property>
+							</object>
+						</child>
+						<child>
+							<object id="navToolbarHide" class="GtkButton">
+									<property name="hexpand">true</property>
+							</object>
+						</child>
+						<child>
+							<object class="GtkButton">
+									<property name="icon-name">view-paged-symbolic</property>
+									<property name="action-name">app.load_overview</property>
+							</object>
+						</child>
+						<style>
+							<class name="toolbar" />
+						</style>
+					</object>
+				</child>
+				
+				<child>
+					<object id="mainStack" class="GtkStack">
+						<property name="transition-type">GTK_STACK_TRANSITION_TYPE_CROSSFADE</property>
+						<child>
+							<object class="GtkStackPage">
+								<property name="name">overview</property>
+								<property name="child">
+									<object class="GtkBox">
+										<property name="margin-top">20px</property>
+										<property name="margin-bottom">20px</property>
+										<property name="margin-start">20px</property>
+										<property name="margin-end">20px</property>
+										<property name="orientation">vertical</property>
+										<child>
+											<object class="GtkLabel">
+												<property name="label">Suche</property>
+												<property name="xalign">0</property>
+												<property name="margin-bottom">10px</property>
+												<style>
+													<class name="mainTitle" />
+												</style>
+											</object>
+										</child>
+										<child>
+											<object id="searchBar" class="GtkEntry">
+												<property name="placeholder-text">Mit Ecosia im Internet suchen ...</property>
+												<property name="halign">center</property>
+												<property name="max-width-chars">70</property>
+												<property name="margin-bottom">20px</property>
+											</object>
+										</child>
+										<child>
+											<object class="GtkLabel">
+												<property name="label">Reiterübersicht</property>
+												<property name="xalign">0</property>
+												<property name="margin-bottom">10px</property>
+												<style>
+													<class name="mainTitle" />
+												</style>
+											</object>
+										</child>
+										<child>
+											<object class="GtkScrolledWindow">
+												<property name="vexpand">true</property>
+												<child>
+													<object id="overview" class="GtkFlowBox">
+														<property name="selection-mode">none</property>
+														<property name="homogeneous">true</property>
+														<property name="valign">start</property>
+														<child>
+															<object class="GtkButton">
+																<property name="label">vertical</property>
+															</object>
+														</child>
+														<child>
+															<object class="GtkButton">
+																<property name="label">vertical</property>
+															</object>
+														</child>
+													</object>
+												</child>
+											</object>
+										</child>
+									</object>
+								</property>
+							</object>
+						</child>
+
+					</object>
+				</child>
+			</object>
+		</child>
+	</object>
+</interface>

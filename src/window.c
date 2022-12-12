@@ -30,7 +30,7 @@ void change_tab(gpointer name){
 	GtkWidget* currentTab = gtk_stack_get_visible_child(GTK_STACK(mainStack));
 	currentWebView = currentTab;
 	
-	gtk_widget_show(gtk_builder_get_object(builder, "navToolbar"));
+	gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(builder, "navToolbar")));
 }
 
 void close_tab(){
@@ -121,7 +121,7 @@ void load_overview(){
 	gtk_stack_set_visible_child_name(GTK_STACK(mainStack), "overview");
 	
 	//hide toolbar
-	gtk_widget_hide(gtk_builder_get_object(builder, "navToolbar"));
+	gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(builder, "navToolbar")));
 }
 
 void enter_adress_dialog(){
@@ -163,7 +163,13 @@ void add_tab(){
 }
 
 void hide_toolbar(){
-	gtk_widget_hide(gtk_builder_get_object(builder, "navToolbar"));
+	gtk_widget_hide(GTK_WIDGET(gtk_builder_get_object(builder, "navToolbar")));
+}
+
+void apo_toolbar(GtkEventControllerMotion*, gdouble, gdouble y){
+	if(y>100 && g_strcmp0(gtk_stack_get_visible_child_name(GTK_STACK(mainStack)), "overview") != 0){
+		gtk_widget_show(GTK_WIDGET(gtk_builder_get_object(builder, "navToolbar")));
+	}
 }
 
 void init_window(GtkApplication* app){
@@ -175,8 +181,15 @@ void init_window(GtkApplication* app){
 	gtk_window_present(GTK_WINDOW(mainWindow));
 	load_overview();
 	
+	//toolbar
+	GtkGesture* gesture = gtk_gesture_click_new();
+	gtk_gesture_single_set_button(GTK_GESTURE_SINGLE(gesture), 0);
+	g_signal_connect(gesture, "released", G_CALLBACK(hide_toolbar), NULL);
+	gtk_widget_add_controller(GTK_WIDGET(gtk_builder_get_object(builder, "navToolbar")), GTK_EVENT_CONTROLLER(gesture));
+	GtkEventController* ecMove = gtk_event_controller_motion_new();
+	g_signal_connect(ecMove, "motion", G_CALLBACK(apo_toolbar), NULL);
+	gtk_widget_add_controller(GTK_WIDGET(gtk_builder_get_object(builder, "mainStack")), GTK_EVENT_CONTROLLER(ecMove));
+	
 	//search bar
 	g_signal_connect(GTK_WIDGET(gtk_builder_get_object(builder, "searchBar")), "activate", G_CALLBACK(do_web_search), NULL);
-	
-	g_signal_connect(GTK_WIDGET(gtk_builder_get_object(builder, "navToolbarHide")), "clicked", G_CALLBACK(hide_toolbar), NULL);
 }

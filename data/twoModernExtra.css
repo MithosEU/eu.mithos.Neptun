@@ -8,6 +8,10 @@ window.background{
 	background-color: #f2f2f2ff;
 }
 
+window.dialog.background{
+	background-color: unset;
+}
+
 .dialog{
 	background-color: transparent;
 }

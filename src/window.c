@@ -149,6 +149,21 @@ void add_tab_fc(WebKitWebView*, WebKitNavigationAction* navAction){
 	webkit_web_view_load_uri(WEBKIT_WEB_VIEW(currentWebView), tabURL);
 }
 
+static gboolean add_tab_fcd(WebKitWebView*, WebKitPolicyDecision* decision, WebKitPolicyDecisionType type){
+	if (type != WEBKIT_POLICY_DECISION_TYPE_NAVIGATION_ACTION) return(FALSE);
+	
+	WebKitNavigationAction *navigationAction = webkit_navigation_policy_decision_get_navigation_action(WEBKIT_NAVIGATION_POLICY_DECISION(decision)); 
+	
+	if(webkit_navigation_action_get_mouse_button(navigationAction) == GDK_BUTTON_MIDDLE){
+		add_tab();
+		webkit_web_view_load_request(WEBKIT_WEB_VIEW(currentWebView), webkit_navigation_action_get_request(navigationAction));
+		webkit_policy_decision_ignore(decision);
+		return(TRUE);
+	}
+	
+	return(FALSE);
+}
+
 void add_tab(){
 	GtkWidget* webView = webkit_web_view_new();
 	GtkStackPage* page = gtk_stack_add_named(GTK_STACK(mainStack), webView, g_strdup_printf("tab%d", tabCount));
@@ -156,6 +171,7 @@ void add_tab(){
 	webkit_web_view_load_uri(WEBKIT_WEB_VIEW(webView), "https://mithoseu.github.io/main/");
 	
 	g_signal_connect(WEBKIT_WEB_VIEW(webView), "create", G_CALLBACK(add_tab_fc), NULL);
+	g_signal_connect(WEBKIT_WEB_VIEW(webView), "decide-policy", G_CALLBACK(add_tab_fcd), NULL);
 	
 	currentWebView = webView;
 	change_tab(g_strdup_printf("tab%d", tabCount));

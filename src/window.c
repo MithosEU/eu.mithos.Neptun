@@ -5,6 +5,7 @@
 GtkWidget* mainWindow;
 GtkWidget* mainStack;
 GtkWidget* currentWebView;
+WebKitWebContext* webContext;
 int tabCount = 0;
 
 void fix_helper_transient(GtkWidget* dialog){
@@ -164,14 +165,15 @@ static gboolean add_tab_fcd(WebKitWebView*, WebKitPolicyDecision* decision, WebK
 	return(FALSE);
 }
 
-void add_tab(){
-	GtkWidget* webView = webkit_web_view_new();
+void add_tab(){	
+	GtkWidget* webView = webkit_web_view_new_with_context(webContext);
 	GtkStackPage* page = gtk_stack_add_named(GTK_STACK(mainStack), webView, g_strdup_printf("tab%d", tabCount));
 	g_signal_connect(WEBKIT_WEB_VIEW(webView), "load-changed", G_CALLBACK(set_title_co), (gpointer) page);
 	webkit_web_view_load_uri(WEBKIT_WEB_VIEW(webView), "https://mithoseu.github.io/main/");
 	
 	g_signal_connect(WEBKIT_WEB_VIEW(webView), "create", G_CALLBACK(add_tab_fc), NULL);
 	g_signal_connect(WEBKIT_WEB_VIEW(webView), "decide-policy", G_CALLBACK(add_tab_fcd), NULL);
+	
 	
 	currentWebView = webView;
 	change_tab(g_strdup_printf("tab%d", tabCount));
@@ -208,4 +210,13 @@ void init_window(GtkApplication* app){
 	
 	//search bar
 	g_signal_connect(GTK_WIDGET(gtk_builder_get_object(builder, "searchBar")), "activate", G_CALLBACK(do_web_search), NULL);
+	
+	//webcontext
+	const gchar* dir = g_get_user_config_dir();
+	WebKitWebsiteDataManager* webDataManager = webkit_website_data_manager_new("base-cache-directory", g_strdup_printf("%s/eu.mithos.Neptun/WebKit/Cache", dir),
+                                												"base-data-directory", g_strdup_printf("%s/eu.mithos.Neptun/WebKit/Data", dir),
+                                												NULL);
+	webContext = webkit_web_context_new_with_website_data_manager(webDataManager);
+	WebKitCookieManager* webCookieManager = webkit_web_context_get_cookie_manager(webContext);
+	webkit_cookie_manager_set_persistent_storage(webCookieManager, g_strdup_printf("%s/eu.mithos.Neptun/Cookies.txt", dir), WEBKIT_COOKIE_PERSISTENT_STORAGE_TEXT);
 }
